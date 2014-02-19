@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger>
+
+    <dataSet config="main" >
+        <source path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res" >
+            <file
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/values-v11/styles.xml"
+                qualifiers="v11" >
+
+                <style
+                    name="AppBaseTheme"
+                    parent="android:Theme.Holo.Light" >
+
+                    <!-- API 11 theme customizations can go here. -->
+                </style>
+            </file>
+            <file
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/values-sw720dp-land/dimens.xml"
+                qualifiers="sw720dp-land" >
+                <dimen name="activity_horizontal_margin" >128dp
+                </dimen>
+            </file>
+            <file
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/values-v14/styles.xml"
+                qualifiers="v14" >
+
+                <style
+                    name="AppBaseTheme"
+                    parent="android:Theme.Holo.Light.DarkActionBar" >
+
+                    <!-- API 14 theme customizations can go here. -->
+                </style>
+            </file>
+            <file
+                name="ic_launcher"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/drawable-mdpi/ic_launcher.png"
+                qualifiers="mdpi"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/drawable-hdpi/ic_launcher.png"
+                qualifiers="hdpi"
+                type="drawable" />
+            <file
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/values/dimens.xml"
+                qualifiers="" >
+                <dimen name="activity_horizontal_margin" >16dp
+                </dimen>
+                <dimen name="activity_vertical_margin" >16dp
+                </dimen>
+            </file>
+            <file
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/values/styles.xml"
+                qualifiers="" >
+
+                <style
+                    name="AppBaseTheme"
+                    parent="android:Theme.Light" >
+
+                    <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+                    -->
+                </style>
+
+                <style
+                    name="AppTheme"
+                    parent="AppBaseTheme" >
+
+                    <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+                </style>
+            </file>
+            <file
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/values/strings.xml"
+                qualifiers="" >
+                <string name="action_settings" >Settings
+                </string>
+                <string name="app_name" >CoolInstrument
+                </string>
+                <string name="hello_world" >Hello world!
+                </string>
+            </file>
+            <file
+                name="main"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/menu/main.xml"
+                qualifiers=""
+                type="menu" />
+            <file
+                name="note8"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/raw/note8.mp3"
+                qualifiers=""
+                type="raw" />
+            <file
+                name="note10"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/raw/note10.mp3"
+                qualifiers=""
+                type="raw" />
+            <file
+                name="note15"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/raw/note15.mp3"
+                qualifiers=""
+                type="raw" />
+            <file
+                name="note9"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/raw/note9.mp3"
+                qualifiers=""
+                type="raw" />
+            <file
+                name="note11"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/raw/note11.mp3"
+                qualifiers=""
+                type="raw" />
+            <file
+                name="note13"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/raw/note13.mp3"
+                qualifiers=""
+                type="raw" />
+            <file
+                name="note16"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/raw/note16.mp3"
+                qualifiers=""
+                type="raw" />
+            <file
+                name="note14"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/raw/note14.mp3"
+                qualifiers=""
+                type="raw" />
+            <file
+                name="splash"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/raw/splash.mp3"
+                qualifiers=""
+                type="raw" />
+            <file
+                name="note12"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/raw/note12.mp3"
+                qualifiers=""
+                type="raw" />
+            <file
+                name="explosion"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/raw/explosion.wav"
+                qualifiers=""
+                type="raw" />
+            <file
+                name="note3"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/raw/note3.mp3"
+                qualifiers=""
+                type="raw" />
+            <file
+                name="background"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/raw/background.mp3"
+                qualifiers=""
+                type="raw" />
+            <file
+                name="note6"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/raw/note6.mp3"
+                qualifiers=""
+                type="raw" />
+            <file
+                name="note2"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/raw/note2.mp3"
+                qualifiers=""
+                type="raw" />
+            <file
+                name="note7"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/raw/note7.mp3"
+                qualifiers=""
+                type="raw" />
+            <file
+                name="note5"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/raw/note5.mp3"
+                qualifiers=""
+                type="raw" />
+            <file
+                name="note1"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/raw/note1.mp3"
+                qualifiers=""
+                type="raw" />
+            <file
+                name="note4"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/raw/note4.mp3"
+                qualifiers=""
+                type="raw" />
+            <file
+                name="ic_launcher"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/drawable-xhdpi/ic_launcher.png"
+                qualifiers="xhdpi"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/drawable-xxhdpi/ic_launcher.png"
+                qualifiers="xxhdpi"
+                type="drawable" />
+            <file
+                name="activity_main"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/layout/activity_main.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="instrument"
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/layout/instrument.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/values/tags.xml"
+                qualifiers="" >
+                <item
+                    name="TAG_NOTE_NUMBER"
+                    type="id"/>
+            </file>
+        </source>
+        <source path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/build/res/rs/debug" />
+        <source path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/build/res/generated/debug" />
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/debug/res" />
+    </dataSet>
+
+</merger>
