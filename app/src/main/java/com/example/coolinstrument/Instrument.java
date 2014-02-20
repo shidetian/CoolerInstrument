@@ -30,6 +30,7 @@ import android.widget.TextView;
 public class Instrument extends Activity {
 
     Piano piano;
+    Replayer replayer;
 
 	TextView b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15,
 			b16;
@@ -39,21 +40,21 @@ public class Instrument extends Activity {
 	SoundPool sp;
 	int n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15, n16;
 	static String lock = "";
-	MediaPlayer mp1, mp2, mp3;
-	private MediaPlayer mp;
-	TextView test;
+//	MediaPlayer mp1, mp2, mp3;
+//	private MediaPlayer mp;
+//	TextView test;
 	Boolean noMove = false;
 	HashSet<String> mainHash = new HashSet<String>();
 	HashSet<String> subHash = new HashSet<String>();
 	ArrayList<Integer> playingList = new ArrayList<Integer>();
 
-    Song song = new Song();
+//    Song song = new Song();
+    Recorder recorder;
 
-	TreeMap<Long, Integer> currentSong = new TreeMap<Long, Integer>();
+//	TreeMap<Long, Integer> currentSong = new TreeMap<Long, Integer>();
 	long startTime = -1;
 	boolean recording = false;
 	
-	Timer playbackTimer = new Timer();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -76,7 +77,7 @@ public class Instrument extends Activity {
 		b14 = (TextView) findViewById(R.id.B14);
 		b15 = (TextView) findViewById(R.id.B15);
 		b16 = (TextView) findViewById(R.id.B16);
-		test = (TextView) findViewById(R.id.tvTest);
+//		test = (TextView) findViewById(R.id.tvTest);
 
 		buttonList.add(b1);
 		buttonList.add(b2);
@@ -95,69 +96,39 @@ public class Instrument extends Activity {
 		buttonList.add(b15);
 		buttonList.add(b16);
 
-		for (Object thisButton : buttonList) {
-			View targetButton = (View) thisButton;
-			// thisButton.setOnClickListener(this);
-			// thisButton.setOnTouchListener(this);
-			targetButton.setSoundEffectsEnabled(false);
+		for (View thisButton : buttonList) {
+//			View targetButton = thisButton;
+			thisButton.setSoundEffectsEnabled(false);
 		}
 
         piano = new Piano(this);
+        recorder = new Recorder();
+        replayer = new Replayer(new Song(), piano);
 
 	}
-	
-	public void onPlaybackToggled(final View view){
-		if (((ToggleButton) view).isChecked()){
-			if (currentSong.isEmpty()){
-				return;
-			}
-			//TODO: hacks, should fix
-			Handler handler = new Handler();
-			for (final Long time : currentSong.keySet()){
-				playbackTimer.schedule(new TimerTask(){
 
-					@Override
-					public void run() {
-						playSound(currentSong.get(time));
-						//Toast.makeText(getApplicationContext(), currentSong.get(time), Toast.LENGTH_SHORT).show();
-					}
-					
-				}, time);
-			}
-			handler.postDelayed(new Runnable(){
-
-				@Override
-				public void run() {
-					((ToggleButton) view).setChecked(false);
-				}
-				
-			}, currentSong.lastKey()+1000);
-		}else{
-			playbackTimer.cancel();
-		}
-	}
+    public void onPlaybackToggled(final View view){
+        if (((ToggleButton) view).isChecked()){
+            replayer.start();
+        } else {
+            replayer.pause();
+        }
+    }
 	
 	public void onRecToggled(View view) {
 	    if (((ToggleButton) view).isChecked()) {
 	        // start record
 	    	Toast.makeText(this, "Recording", Toast.LENGTH_SHORT).show();
 	    	startTime = System.currentTimeMillis();
-	    	recording = true;
-	    	currentSong.clear();
+	    	recorder.clear();
+            recorder.start();
 	    } else {
 	        // stop record, save
 	    	Toast.makeText(this, "Recording Stopped", Toast.LENGTH_SHORT).show();
-	    	recording = false;
+            recorder.pause();
 	    }
 	}
-	
-	//Wrapper function so we can capture notes
-	private void playSound(int note){
-		sp.play(note, 1, 1, 0, 0, 1);
-		if (recording){
-			currentSong.put(System.currentTimeMillis() - startTime, note);
-		}
-	}
+
 	/*
 	 * // button onclick gesture
 	 * 

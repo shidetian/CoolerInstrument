@@ -13,6 +13,22 @@ public class Song {
         notes = new ArrayList<Note>();
 	}
 
+    public boolean isEmpty() {
+        return notes.size() == 0;
+    }
+
+    public Note getNote(int i) {
+        return notes.get(i);
+    }
+
+    public int size() {
+        return notes.size();
+    }
+
+    public void clear() {
+        this.notes = new ArrayList<Note>();
+    }
+
     public ArrayList<Note> getNotes() {
         return notes;
     }

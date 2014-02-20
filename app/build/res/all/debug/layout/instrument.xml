@@ -271,16 +271,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvTest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_marginBottom="21dp"
-        android:text="TextView" />
-
     <ToggleButton
         android:id="@+id/recButton"
         android:layout_width="wrap_content"
