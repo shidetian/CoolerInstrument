@@ -24,6 +24,7 @@ public class Note {
         return isKeyboardDown;
     }
 
+
     public void setKeyboardDown(boolean isKeyboardDown) {
         this.isKeyboardDown = isKeyboardDown;
     }

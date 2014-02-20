@@ -41,17 +41,23 @@ public class Replayer {
             return ;
         }
 
-        //TODO: hacks, should fix
-        Handler handler = new Handler();
-        ArrayList<Note> notes = song.getNotes();
-        for (int i = 0; i < song.size(); i++) {
-            playbackTimer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    piano.playSound(60);
+        _playNextNote();
+    }
+
+    public void _playNextNote() {
+        playbackTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Note note = getCurrentNote();
+                
+                if (note.isKeyboardDown()) {
+                    piano.playSound((getCurrentNote().getNoteNumber() % 12) + 45);
                 }
-            }, 1000);
-        }
+
+                incrementCurrentIndex();
+                _playNextNote();
+            }
+        }, getWaitTime());
     }
 
     public void pause() {
@@ -72,5 +78,19 @@ public class Replayer {
 
     public void setCurrentIndex(int currentIndex) {
         this.currentIndex = currentIndex;
+    }
+
+    public void incrementCurrentIndex() { currentIndex += 1; }
+
+    public Note getCurrentNote() {
+        return song.getNote(currentIndex);
+    }
+
+    public int getWaitTime() {
+        if (currentIndex == 0 || currentIndex == song.size()) {
+            return 0;
+        } else {
+            return song.getNote(currentIndex).getTime() - song.getNote(currentIndex - 1).getTime();
+        }
     }
 }

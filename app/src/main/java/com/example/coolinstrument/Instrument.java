@@ -218,7 +218,7 @@ public class Instrument extends Activity {
                     }
 
                     replayer.setSong(song);
-//                    replayer.start();
+                    replayer.start();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
