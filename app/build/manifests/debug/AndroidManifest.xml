@@ -1,7 +1,7 @@
 <!-- From: file:/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/AndroidManifest.xml --><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.example.coolinstrument">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    
+
     <uses-sdk android:minSdkVersion="11" android:targetSdkVersion="17"/>
 
     <application android:allowBackup="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:theme="@style/AppTheme">
@@ -14,7 +14,7 @@
         </activity>
         <activity android:label="@string/app_name" android:name="com.example.coolinstrument.Instrument" android:screenOrientation="portrait">
         </activity>
-        <activity android:label="@string/title_activity_songs" android:name="com.example.coolinstrument.Songs">
+        <activity android:label="@string/title_activity_songs" android:name="com.example.coolinstrument.SongsActivity">
         </activity>
     </application>
 

@@ -2,16 +2,14 @@ package com.example.coolinstrument;
 
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -23,11 +21,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Songs extends ListActivity {
+public class SongsActivity extends ListActivity {
     private ProgressDialog pDialog;
+    ListView lv;
+
 
     // URL to get contacts JSON
-//    private static String url = "http://api.androidhive.info/contacts/";
     private static String url = "http://amusing3.meteor.com/songsApi";
 
     // JSON Node names
@@ -36,6 +35,8 @@ public class Songs extends ListActivity {
     private static final String TAG_CREATED_AT = "createdAt";
     //    private static final String TAG_NUM_TRACKS = "number of tracks";
     private static final String TAG_ID = "_id";
+    private static final String TAG_NOTES = "notes";
+    private static final String TAG_TIME = "time";
 
     // contacts JSONArray
     JSONArray songs = null;
@@ -47,7 +48,7 @@ public class Songs extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_songs);
-        ListView lv = getListView();
+        lv = getListView();
 
         new GetSongs().execute();
     }
@@ -61,7 +62,7 @@ public class Songs extends ListActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
-            pDialog = new ProgressDialog(Songs.this);
+            pDialog = new ProgressDialog(SongsActivity.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -77,8 +78,6 @@ public class Songs extends ListActivity {
 
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET);
-
-            Log.d("Response: ", "> " + jsonStr);
 
             if (jsonStr != null) {
                 try {
@@ -129,14 +128,31 @@ public class Songs extends ListActivity {
              * Updating parsed JSON data into ListView
              * */
             ListAdapter adapter = new SimpleAdapter(
-                    Songs.this, songList,
+                    SongsActivity.this, songList,
                     R.layout.list_songs, new String[] { TAG_TITLE, TAG_CREATED_AT}, new int[] { R.id.title,
                     R.id.created_at});
 
-            setListAdapter(adapter);
-        }
+            lv.setAdapter(adapter);
 
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    HashMap<String, String> songData = (HashMap<String, String>) lv.getItemAtPosition(i);
+
+                    /**
+                     * Get back to the instrument with the Song data
+                     * */
+                    Intent returnIntent = new Intent();
+
+                    returnIntent.putExtra("songUrl", "http://amusing3.meteor.com/songApi/" + songData.get("_id"));
+                    setResult(RESULT_OK, returnIntent);
+
+                    finish();
+                }
+            });
+        }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

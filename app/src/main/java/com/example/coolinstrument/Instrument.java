@@ -3,20 +3,14 @@ package com.example.coolinstrument;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.TreeMap;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.graphics.RectF;
-import android.media.AudioManager;
-import android.media.AudioTrack;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 import android.view.Menu;
@@ -24,15 +18,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.widget.Button;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Instrument extends Activity {
     public static final int SONG_ID_REQUEST = 1;
+    private ProgressDialog pDialog;
 
     Piano piano;
     Replayer replayer;
@@ -146,7 +142,7 @@ public class Instrument extends Activity {
         switch(item.getItemId())
         {
             case R.id.songs:
-                Intent songsIntent = new Intent(getApplicationContext(), Songs.class);
+                Intent songsIntent = new Intent(getApplicationContext(), SongsActivity.class);
                 startActivityForResult(songsIntent, SONG_ID_REQUEST);
                 break;
         }
@@ -157,10 +153,95 @@ public class Instrument extends Activity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SONG_ID_REQUEST) {
             if (resultCode == RESULT_OK) {
-                Log.d("data", data.getStringExtra("_id"));
+                new GetSong().execute(data.getStringExtra("songUrl"));
             }
         }
     }
+
+    /**
+     * Async task class to get notes of a song by making HTTP call
+     * */
+    private class GetSong extends AsyncTask<String, Void, Void> {
+        Song song;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
+            pDialog = new ProgressDialog(Instrument.this);
+            pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected Void doInBackground(String... songUrl) {
+
+            song = new Song();
+
+            // Creating service handler class instance
+            ServiceHandler sh = new ServiceHandler();
+
+            // Making a request to url and getting response
+            String jsonStr = sh.makeServiceCall(songUrl[0], ServiceHandler.GET);
+
+            if (jsonStr != null) {
+                try {
+                    // Getting JSON Array node
+                    JSONObject songJson = new JSONObject(jsonStr);
+
+
+//                    String id = songJson.getString(TAG_ID);
+//                    String title = songJson.getString(TAG_TITLE);
+//                    String createdAt = songJson.getString(TAG_CREATED_AT);
+                    JSONArray notesJson = songJson.getJSONArray("notes");
+
+                    for (int j = 0; j < notesJson.length(); j++) {
+                        Note note = new Note();
+                        JSONObject noteJson = notesJson.getJSONObject(j);
+                        note.setTime(noteJson.getInt("time"));
+                        note.setNoteNumber(noteJson.getInt("note"));
+
+
+                        note.setKeyCode(noteJson.getInt("keyCode"));
+                        note.setSegmentId(noteJson.getInt("segmentId"));
+
+                        // this property require special treatment as it can be null
+                        boolean isKeyboardDown = false;
+                        if (noteJson.has("isKeyboardDown") && noteJson.getBoolean("isKeyboardDown")) {
+                            isKeyboardDown = true;
+                        }
+                        note.setKeyboardDown(isKeyboardDown);
+
+                        song.addNote(note);
+                    }
+
+                    replayer.setSong(song);
+//                    replayer.start();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Log.e("ServiceHandler", "Couldn't get any data from the url");
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            // Dismiss the progress dialog
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+
+        }
+    }
+
 
 //    public void registerKeyDownListener()
 

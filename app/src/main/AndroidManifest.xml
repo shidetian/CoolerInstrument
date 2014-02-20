@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    
+
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="17" />
@@ -30,7 +30,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.example.coolinstrument.Songs"
+            android:name=".SongsActivity"
             android:label="@string/title_activity_songs" >
         </activity>
     </application>
