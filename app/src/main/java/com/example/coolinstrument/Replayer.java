@@ -52,15 +52,6 @@ public class Replayer {
                 }
             }, 1000);
         }
-
-//        handler.postDelayed(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                ((ToggleButton) view).setChecked(false);
-//            }
-//
-//        }, currentSong.lastKey() + 1000);
     }
 
     public void pause() {

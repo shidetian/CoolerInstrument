@@ -52,6 +52,12 @@ public class Piano {
         soundList.put(58, n14);
         soundList.put(59, n15);
         soundList.put(60, n16); // 60 is the noteNumber for middle C
+
+//        context.registerKeyDownListener(new KeyDownListener() {
+//            public void onKeyDown(int noteNumber) {
+//                playSound(noteNumber);
+//            }
+//        });
     }
 
     public void playSound(int noteNumber){
@@ -60,4 +66,5 @@ public class Piano {
 //            currentSong.put(System.currentTimeMillis() - startTime, note);
 //        }
     }
+
 }

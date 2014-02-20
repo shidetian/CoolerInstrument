@@ -18,6 +18,10 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,6 +32,7 @@ import android.widget.ToggleButton;
 import android.widget.TextView;
 
 public class Instrument extends Activity {
+    public static final int SONG_ID_REQUEST = 1;
 
     Piano piano;
     Replayer replayer;
@@ -128,6 +133,36 @@ public class Instrument extends Activity {
             recorder.pause();
 	    }
 	}
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId())
+        {
+            case R.id.songs:
+                Intent songsIntent = new Intent(getApplicationContext(), Songs.class);
+                startActivityForResult(songsIntent, SONG_ID_REQUEST);
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SONG_ID_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Log.d("data", data.getStringExtra("_id"));
+            }
+        }
+    }
+
+//    public void registerKeyDownListener()
 
 	/*
 	 * // button onclick gesture
