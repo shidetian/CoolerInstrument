@@ -51,7 +51,7 @@ public class Replayer {
                 Note note = getCurrentNote();
                 
                 if (note.isKeyboardDown()) {
-                    piano.playSound((getCurrentNote().getNoteNumber() % 12) + 45);
+                    piano.playSound(getCurrentNote().getNoteNumber());
                 }
 
                 incrementCurrentIndex();
