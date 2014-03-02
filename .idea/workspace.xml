@@ -10,6 +10,9 @@
       <config />
     </shared>
   </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="note" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="2924526b-d3c6-4002-8785-2e8473818f8f" name="Default" comment="" />
     <ignored path="CoolerInstrument.iws" />
@@ -83,31 +86,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Piano.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/Piano.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="102" column="40" selection-start="4877" selection-end="4877" vertical-scroll-proportion="0.91071427" vertical-offset="1164" max-vertical-offset="1755">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Replayer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/Replayer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="0" selection-start="895" selection-end="895" vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="1260">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="instrument.xml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="instrument.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/instrument.xml">
           <provider editor-type-id="android-designer">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="38" selection-start="38" selection-end="38" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4545">
+            <state line="149" column="44" selection-start="5735" selection-end="5735" vertical-scroll-proportion="0.6721311" vertical-offset="1989" max-vertical-offset="4680">
               <folding />
             </state>
           </provider>
@@ -128,8 +113,20 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="13" selection-start="163" selection-end="163" vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="465">
+            <state line="7" column="13" selection-start="163" selection-end="163" vertical-scroll-proportion="0.0" vertical-offset="28" max-vertical-offset="420">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Replayer.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/Replayer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="55" column="0" selection-start="1215" selection-end="1215" vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="1380">
+              <folding>
+                <element signature="e#993#1449#0" expanded="true" />
+                <element signature="e#1438#1439#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -137,7 +134,16 @@
       <file leaf-file-name="Instrument.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/Instrument.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="13" selection-start="753" selection-end="753" vertical-scroll-proportion="0.0" vertical-offset="5184" max-vertical-offset="6645">
+            <state line="275" column="38" selection-start="8648" selection-end="8654" vertical-scroll-proportion="-2.0" vertical-offset="3653" max-vertical-offset="6300">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Piano.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/Piano.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="104" column="50" selection-start="4843" selection-end="4843" vertical-scroll-proportion="0.0" vertical-offset="1258" max-vertical-offset="1695">
               <folding />
             </state>
           </provider>
@@ -584,11 +590,9 @@
       <list>
         <option value="$PROJECT_DIR$/app/src/main/res/values/tags.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/GlobalObject.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/Song.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/Recorder.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/NoteOnEvent.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/KeyDownEvent.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/instrument.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/main.xml" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/ServiceHandler.java" />
@@ -598,11 +602,13 @@
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/GetSongs.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/Songs.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/Instrument.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/Note.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/SongsActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/Song.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/Replayer.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/Instrument.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/Piano.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/instrument.xml" />
       </list>
     </option>
   </component>
@@ -745,36 +751,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="values" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CoolerInstrument" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CoolerInstrument" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="raw" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1082,7 +1058,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18281938" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18281938" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39967898" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1402,29 +1378,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/instrument.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="38" selection-start="38" selection-end="38" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4545">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_songs.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state line="24" column="0" selection-start="789" selection-end="789" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="480">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="13" selection-start="163" selection-end="163" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="420">
           <folding />
         </state>
       </provider>
@@ -1453,23 +1412,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/Instrument.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="13" selection-start="753" selection-end="753" vertical-scroll-proportion="0.0" vertical-offset="5184" max-vertical-offset="6645">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/ServiceHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="18" column="13" selection-start="616" selection-end="616" vertical-scroll-proportion="0.0" vertical-offset="763" max-vertical-offset="1245">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/Song.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="43" selection-start="529" selection-end="529" vertical-scroll-proportion="0.04336735" vertical-offset="388" max-vertical-offset="780">
           <folding />
         </state>
       </provider>
@@ -1498,16 +1443,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="13" selection-start="163" selection-end="163" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="420">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/Song.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="32" selection-start="363" selection-end="363" vertical-scroll-proportion="0.68877554" vertical-offset="0" max-vertical-offset="780">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/Replayer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="0" selection-start="895" selection-end="895" vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="1260">
-          <folding />
+        <state line="55" column="0" selection-start="1215" selection-end="1215" vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="1380">
+          <folding>
+            <element signature="e#993#1449#0" expanded="true" />
+            <element signature="e#1438#1439#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/Piano.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="102" column="40" selection-start="4877" selection-end="4877" vertical-scroll-proportion="0.91071427" vertical-offset="1164" max-vertical-offset="1755">
+        <state line="104" column="50" selection-start="4843" selection-end="4843" vertical-scroll-proportion="0.0" vertical-offset="1258" max-vertical-offset="1695">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/coolinstrument/Instrument.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="275" column="38" selection-start="8648" selection-end="8654" vertical-scroll-proportion="-2.0" vertical-offset="3653" max-vertical-offset="6300">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/instrument.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="149" column="44" selection-start="5735" selection-end="5735" vertical-scroll-proportion="0.6721311" vertical-offset="1989" max-vertical-offset="4680">
           <folding />
         </state>
       </provider>

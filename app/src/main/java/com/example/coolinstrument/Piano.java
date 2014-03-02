@@ -3,6 +3,7 @@ package com.example.coolinstrument;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.util.Log;
 
 import java.util.HashMap;
 
@@ -16,7 +17,7 @@ public class Piano {
     
     public Piano(Context context) {
 
-        sp = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+        sp = new SoundPool(15, AudioManager.STREAM_MUSIC, 0);
         soundList = new HashMap<Integer, Integer>();
 
         soundList.put(24, sp.load(context, R.raw.c1, 1));
@@ -98,14 +99,10 @@ public class Piano {
         soundList.put(94, sp.load(context, R.raw.bb6, 1));
         soundList.put(95, sp.load(context, R.raw.b6, 1));
 
-//        context.registerKeyDownListener(new KeyDownListener() {
-//            public void onKeyDown(int noteNumber) {
-//                playSound(noteNumber);
-//            }
-//        });
     }
 
     public void playSound(int noteNumber){
+        Log.d("note number:   ", "hi" + noteNumber);
         sp.play(soundList.get(noteNumber), 1, 1, 0, 0, 1);
 //        if (recording){
 //            currentSong.put(System.currentTimeMillis() - startTime, note);

@@ -255,13 +255,13 @@ int id action_context_bar 0x7f08001e
 int id action_menu_divider 0x7f080016
 int id action_menu_presenter 0x7f080017
 int id action_mode_close_button 0x7f080025
-int id action_settings 0x7f080051
+int id action_settings 0x7f080052
 int id activity_chooser_view_content 0x7f080026
 int id always 0x7f08000f
 int id beginning 0x7f08000a
 int id checkbox 0x7f08002e
 int id collapseActionView 0x7f080011
-int id created_at 0x7f080050
+int id created_at 0x7f080051
 int id default_activity_button 0x7f080029
 int id dialog 0x7f080012
 int id disableHome 0x7f080008
@@ -301,7 +301,8 @@ int id shortcut 0x7f08002f
 int id showCustom 0x7f080007
 int id showHome 0x7f080004
 int id showTitle 0x7f080006
-int id songs 0x7f080052
+int id songs 0x7f080053
+int id songs_button 0x7f080050
 int id split_action_bar 0x7f08001f
 int id submit_area 0x7f08003a
 int id tabMode 0x7f080002

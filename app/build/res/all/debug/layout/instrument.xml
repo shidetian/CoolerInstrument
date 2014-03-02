@@ -29,7 +29,7 @@
                 android:layout_marginRight="5sp"
                 android:background="#000000"
                 android:gravity="center"
-                android:tag="50"
+                android:tag="45"
                 android:text="A"
                 android:textColor="#ffffff" />
 
@@ -43,7 +43,7 @@
                 android:layout_marginRight="5sp"
                 android:background="#000000"
                 android:gravity="center"
-                android:tag="50"
+                android:tag="46"
                 android:text="Bb"
                 android:textColor="#ffffff" />
 
@@ -57,7 +57,7 @@
                 android:layout_marginRight="5sp"
                 android:background="#000000"
                 android:gravity="center"
-                android:tag="50"
+                android:tag="47"
                 android:text="B"
                 android:textColor="#ffffff" />
 
@@ -71,7 +71,7 @@
                 android:layout_marginRight="5sp"
                 android:background="#000000"
                 android:gravity="center"
-                android:tag="50"
+                android:tag="48"
                 android:text="C"
                 android:textColor="#ffffff" />
         </LinearLayout>
@@ -136,7 +136,7 @@
                 android:layout_marginRight="5sp"
                 android:background="#000000"
                 android:gravity="center"
-                android:tag="50"
+                android:tag="52"
                 android:text="E"
                 android:textColor="#ffffff" />
         </LinearLayout>
@@ -159,7 +159,7 @@
                 android:layout_marginRight="5sp"
                 android:background="#000000"
                 android:gravity="center"
-                android:tag="50"
+                android:tag="53"
                 android:text="F"
                 android:textColor="#ffffff" />
 
@@ -173,7 +173,7 @@
                 android:layout_marginRight="5sp"
                 android:background="#000000"
                 android:gravity="center"
-                android:tag="50"
+                android:tag="54"
                 android:text="Gb"
                 android:textColor="#ffffff" />
 
@@ -187,7 +187,7 @@
                 android:layout_marginRight="5sp"
                 android:background="#000000"
                 android:gravity="center"
-                android:tag="50"
+                android:tag="55"
                 android:text="G"
                 android:textColor="#ffffff" />
 
@@ -201,7 +201,7 @@
                 android:layout_marginRight="5sp"
                 android:background="#000000"
                 android:gravity="center"
-                android:tag="50"
+                android:tag="56"
                 android:text="Ab"
                 android:textColor="#ffffff" />
         </LinearLayout>
@@ -224,7 +224,7 @@
                 android:layout_marginRight="5sp"
                 android:background="#000000"
                 android:gravity="center"
-                android:tag="50"
+                android:tag="57"
                 android:text="A2"
                 android:textColor="#ffffff" />
 
@@ -238,7 +238,7 @@
                 android:layout_marginRight="5sp"
                 android:background="#000000"
                 android:gravity="center"
-                android:tag="50"
+                android:tag="58"
                 android:text="Bb2"
                 android:textColor="#ffffff" />
 
@@ -252,7 +252,7 @@
                 android:layout_marginRight="5sp"
                 android:background="#000000"
                 android:gravity="center"
-                android:tag="50"
+                android:tag="59"
                 android:text="B2"
                 android:textColor="#ffffff" />
 
@@ -266,7 +266,7 @@
                 android:layout_marginRight="5sp"
                 android:background="#000000"
                 android:gravity="center"
-                android:tag="50"
+                android:tag="60"
                 android:text="C2"
                 android:textColor="#ffffff" />
         </LinearLayout>
@@ -294,5 +294,14 @@
         android:onClick="onPlaybackToggled"
         android:textOff="Play"
         android:textOn="Stop" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Find Song"
+        android:onClick="onSongsClick"
+        android:id="@+id/songs_button"
+        android:layout_alignTop="@+id/playButton"
+        android:layout_toRightOf="@+id/playButton" />
 
 </RelativeLayout><!-- From: file:/home/lam/AndroidStudioProjects/CoolerInstrument/app/src/main/res/layout/instrument.xml -->

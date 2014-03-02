@@ -882,13 +882,13 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f080016;
         public static final int action_menu_presenter=0x7f080017;
         public static final int action_mode_close_button=0x7f080025;
-        public static final int action_settings=0x7f080051;
+        public static final int action_settings=0x7f080052;
         public static final int activity_chooser_view_content=0x7f080026;
         public static final int always=0x7f08000f;
         public static final int beginning=0x7f08000a;
         public static final int checkbox=0x7f08002e;
         public static final int collapseActionView=0x7f080011;
-        public static final int created_at=0x7f080050;
+        public static final int created_at=0x7f080051;
         public static final int default_activity_button=0x7f080029;
         public static final int dialog=0x7f080012;
         public static final int disableHome=0x7f080008;
@@ -928,7 +928,8 @@ containing a value of this type.
         public static final int showCustom=0x7f080007;
         public static final int showHome=0x7f080004;
         public static final int showTitle=0x7f080006;
-        public static final int songs=0x7f080052;
+        public static final int songs=0x7f080053;
+        public static final int songs_button=0x7f080050;
         public static final int split_action_bar=0x7f08001f;
         public static final int submit_area=0x7f08003a;
         public static final int tabMode=0x7f080002;

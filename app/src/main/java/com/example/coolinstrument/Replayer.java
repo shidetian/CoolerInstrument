@@ -48,13 +48,18 @@ public class Replayer {
         playbackTimer.schedule(new TimerTask() {
             @Override
             public void run() {
+                if (getCurrentIndex() >= song.size()) {
+                    return ;
+                }
+
                 Note note = getCurrentNote();
-                
+
                 if (note.isKeyboardDown()) {
                     piano.playSound(getCurrentNote().getNoteNumber());
                 }
 
                 incrementCurrentIndex();
+
                 _playNextNote();
             }
         }, getWaitTime());
