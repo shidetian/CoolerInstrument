@@ -6,10 +6,8 @@ import android.view.View;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.Stack;
 
 /**
  * Created by lam on 2/19/14.
@@ -19,8 +17,6 @@ public class Replayer {
     private Timer playbackTimer = new Timer();
     private int currentIndex;
     private Piano piano;
-    private Stack<Note> notes;
-    private Stack<Note> notesPressed;
 
     public Replayer(Song song, Context context) {
         this(song, new Piano(context));
@@ -30,8 +26,6 @@ public class Replayer {
         this.song = song;
         this.piano = piano;
         this.currentIndex = 0;
-        this.notes = new Stack<Note>();
-        this.notesPressed = new Stack<Note>();
     }
 
     public void reset() {
@@ -51,36 +45,22 @@ public class Replayer {
     }
 
     public void _playNextNote() {
-            if (currentIndex >= song.size())
-                return;
-
-            Note note = getCurrentNote();
-            incrementCurrentIndex();
-
-            if (note.isKeyboardDown()){
-                while (getWaitTime() == 0){
-                    if (getCurrentNote().isKeyboardDown())
-                        notes.push(getCurrentNote());
-                    incrementCurrentIndex();
+        playbackTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Note note = getCurrentNote();
+                
+                if (note.isKeyboardDown()) {
+                    piano.playSound((getCurrentNote().getNoteNumber() % 12) + 45);
                 }
 
-                while (!isNotePressed(note)){
-                    try{
-                        this.wait();
-                    } catch (InterruptedException e){
-                    }
-                }
-
-                piano.playSound((getCurrentNote().getNoteNumber() % 12) + 45);
-                while (!notes.empty())
-                    piano.playSound((notes.pop().getNoteNumber() % 12) + 45);
+                incrementCurrentIndex();
+                _playNextNote();
             }
-
-            _playNextNote();
+        }, getWaitTime());
     }
 
     public void pause() {
-        notesPressed.removeAllElements();
         playbackTimer.cancel();
     }
 
@@ -90,11 +70,6 @@ public class Replayer {
 
     public void setSong(Song song) {
         this.song = song;
-    }
-
-    public void addNotePressed(Note note){
-        if (note != null)
-            notesPressed.push(note);
     }
 
     public int getCurrentIndex() {
@@ -117,15 +92,5 @@ public class Replayer {
         } else {
             return song.getNote(currentIndex).getTime() - song.getNote(currentIndex - 1).getTime();
         }
-    }
-
-    private boolean isNotePressed(Note note){
-        while (!notesPressed.empty()){
-            if (note.getNoteNumber() == notesPressed.pop().getNoteNumber()){
-                notesPressed.removeAllElements();
-                return true;
-            }
-        }
-        return false;
     }
 }

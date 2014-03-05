@@ -3,31 +3,35 @@ package com.example.coolinstrument;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.TreeMap;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.graphics.RectF;
-import android.media.AudioManager;
-import android.media.AudioTrack;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.widget.Button;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Instrument extends Activity {
+    public static final int SONG_ID_REQUEST = 1;
+    private ProgressDialog pDialog;
+
+    Piano piano;
+    Replayer replayer;
 
 	TextView b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15,
 			b16;
@@ -37,19 +41,21 @@ public class Instrument extends Activity {
 	SoundPool sp;
 	int n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15, n16;
 	static String lock = "";
-	MediaPlayer mp1, mp2, mp3;
-	private MediaPlayer mp;
-	TextView test;
+//	MediaPlayer mp1, mp2, mp3;
+//	private MediaPlayer mp;
+//	TextView test;
 	Boolean noMove = false;
 	HashSet<String> mainHash = new HashSet<String>();
 	HashSet<String> subHash = new HashSet<String>();
 	ArrayList<Integer> playingList = new ArrayList<Integer>();
 
-	TreeMap<Long, Integer> currentSong = new TreeMap<Long, Integer>();
+//    Song song = new Song();
+    Recorder recorder;
+
+//	TreeMap<Long, Integer> currentSong = new TreeMap<Long, Integer>();
 	long startTime = -1;
 	boolean recording = false;
 	
-	Timer playbackTimer = new Timer();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -72,7 +78,7 @@ public class Instrument extends Activity {
 		b14 = (TextView) findViewById(R.id.B14);
 		b15 = (TextView) findViewById(R.id.B15);
 		b16 = (TextView) findViewById(R.id.B16);
-		test = (TextView) findViewById(R.id.tvTest);
+//		test = (TextView) findViewById(R.id.tvTest);
 
 		buttonList.add(b1);
 		buttonList.add(b2);
@@ -90,106 +96,155 @@ public class Instrument extends Activity {
 		buttonList.add(b14);
 		buttonList.add(b15);
 		buttonList.add(b16);
-		for (Object thisButton : buttonList) {
-			View targetButton = (View) thisButton;
-			// thisButton.setOnClickListener(this);
-			// thisButton.setOnTouchListener(this);
-			targetButton.setSoundEffectsEnabled(false);
+
+		for (View thisButton : buttonList) {
+//			View targetButton = thisButton;
+			thisButton.setSoundEffectsEnabled(false);
 		}
 
-		sp = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+        piano = new Piano(this);
+        recorder = new Recorder();
+        replayer = new Replayer(new Song(), piano);
 
-		n1 = sp.load(this, R.raw.note1, 1);
-
-		n2 = sp.load(this, R.raw.note2, 1);
-
-		n3 = sp.load(this, R.raw.note3, 1);
-		n4 = sp.load(this, R.raw.note4, 1);
-		n5 = sp.load(this, R.raw.note5, 1);
-		n6 = sp.load(this, R.raw.note6, 1);
-
-		n7 = sp.load(this, R.raw.note7, 1);
-		n8 = sp.load(this, R.raw.note8, 1);
-		n9 = sp.load(this, R.raw.note9, 1);
-
-		n10 = sp.load(this, R.raw.note10, 1);
-		n11 = sp.load(this, R.raw.note11, 1);
-
-		n12 = sp.load(this, R.raw.note12, 1);
-		n13 = sp.load(this, R.raw.note13, 1);
-		n14 = sp.load(this, R.raw.note14, 1);
-		n15 = sp.load(this, R.raw.note15, 1);
-		n16 = sp.load(this, R.raw.note16, 1);
-		soundList.put("A", n1);
-		soundList.put("Bb", n2);
-		soundList.put("B", n3);
-		soundList.put("C", n4);
-		soundList.put("Db", n5);
-		soundList.put("D", n6);
-		soundList.put("Eb", n7);
-		soundList.put("E", n8);
-		soundList.put("F", n9);
-		soundList.put("Gb", n10);
-		soundList.put("G", n11);
-		soundList.put("Ab", n12);
-		soundList.put("A2", n13);
-		soundList.put("Bb2", n14);
-		soundList.put("B2", n15);
-		soundList.put("C2", n16);
 	}
-	
-	public void onPlaybackToggled(final View view){
-		if (((ToggleButton) view).isChecked()){
-			if (currentSong.isEmpty()){
-				return;
-			}
-			//TODO: hacks, should fix
-			Handler handler = new Handler();
-			for (final Long time : currentSong.keySet()){
-				playbackTimer.schedule(new TimerTask(){
 
-					@Override
-					public void run() {
-						playSound(currentSong.get(time));
-						//Toast.makeText(getApplicationContext(), currentSong.get(time), Toast.LENGTH_SHORT).show();
-					}
-					
-				}, time);
-			}
-			handler.postDelayed(new Runnable(){
-
-				@Override
-				public void run() {
-					((ToggleButton) view).setChecked(false);
-				}
-				
-			}, currentSong.lastKey()+1000);
-		}else{
-			playbackTimer.cancel();
-		}
-	}
+    public void onPlaybackToggled(final View view){
+        if (((ToggleButton) view).isChecked()){
+            replayer.start();
+        } else {
+            replayer.pause();
+        }
+    }
 	
 	public void onRecToggled(View view) {
 	    if (((ToggleButton) view).isChecked()) {
 	        // start record
 	    	Toast.makeText(this, "Recording", Toast.LENGTH_SHORT).show();
 	    	startTime = System.currentTimeMillis();
-	    	recording = true;
-	    	currentSong.clear();
+	    	recorder.clear();
+            recorder.start();
 	    } else {
 	        // stop record, save
 	    	Toast.makeText(this, "Recording Stopped", Toast.LENGTH_SHORT).show();
-	    	recording = false;
+            recorder.pause();
 	    }
 	}
-	
-	//Wrapper function so we can capture notes
-	private void playSound(int note){
-		sp.play(note, 1, 1, 0, 0, 1);
-		if (recording){
-			currentSong.put(System.currentTimeMillis() - startTime, note);
-		}
-	}
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId())
+        {
+            case R.id.songs:
+                Intent songsIntent = new Intent(getApplicationContext(), SongsActivity.class);
+                startActivityForResult(songsIntent, SONG_ID_REQUEST);
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SONG_ID_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                new GetSong().execute(data.getStringExtra("songUrl"));
+            }
+        }
+    }
+
+    /**
+     * Async task class to get notes of a song by making HTTP call
+     * */
+    private class GetSong extends AsyncTask<String, Void, Void> {
+        Song song;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
+            pDialog = new ProgressDialog(Instrument.this);
+            pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected Void doInBackground(String... songUrl) {
+
+            song = new Song();
+
+            // Creating service handler class instance
+            ServiceHandler sh = new ServiceHandler();
+
+            // Making a request to url and getting response
+            String jsonStr = sh.makeServiceCall(songUrl[0], ServiceHandler.GET);
+
+            if (jsonStr != null) {
+                try {
+                    // Getting JSON Array node
+                    JSONObject songJson = new JSONObject(jsonStr);
+
+
+//                    String id = songJson.getString(TAG_ID);
+//                    String title = songJson.getString(TAG_TITLE);
+//                    String createdAt = songJson.getString(TAG_CREATED_AT);
+                    JSONArray notesJson = songJson.getJSONArray("notes");
+
+                    for (int j = 0; j < notesJson.length(); j++) {
+                        Note note = new Note();
+                        JSONObject noteJson = notesJson.getJSONObject(j);
+                        note.setTime(noteJson.getInt("time"));
+                        note.setNoteNumber(noteJson.getInt("note"));
+
+
+                        note.setKeyCode(noteJson.getInt("keyCode"));
+                        note.setSegmentId(noteJson.getInt("segmentId"));
+
+                        // this property require special treatment as it can be null
+                        boolean isKeyboardDown = false;
+                        if (noteJson.has("isKeyboardDown") && noteJson.getBoolean("isKeyboardDown")) {
+                            isKeyboardDown = true;
+                        }
+                        note.setKeyboardDown(isKeyboardDown);
+
+                        song.addNote(note);
+                    }
+
+                    replayer.setSong(song);
+                    replayer.start();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Log.e("ServiceHandler", "Couldn't get any data from the url");
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            // Dismiss the progress dialog
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+
+        }
+    }
+
+
+//    public void registerKeyDownListener()
+
 	/*
 	 * // button onclick gesture
 	 * 
@@ -217,6 +272,7 @@ public class Instrument extends Activity {
 						Boolean breakout = false;
 						Boolean hashLock = false;
 						for (TextView targetButton : buttonList) {
+                            int noteNumber = Integer.parseInt((String) targetButton.getTag());
 							String buttonText = targetButton.getText()
 									.toString();
 							if ((!subHash.contains(buttonText))
@@ -232,7 +288,8 @@ public class Instrument extends Activity {
 									if (buttonRect.contains(xVal, yVal)) {
 										/*sp.play(soundList.get(buttonText), 1,
 												1, 0, 0, 1);*/
-										playSound(soundList.get(buttonText));
+                                        piano.playSound(noteNumber);
+//										playSound(soundList.get(buttonText));
 										breakout = true;
 										subHash.add(buttonText);
 									}
@@ -259,6 +316,7 @@ public class Instrument extends Activity {
 					Boolean breakout = false;
 					Boolean hashLock = false;
 					for (TextView targetButton : buttonList) {
+                        int noteNumber = Integer.parseInt((String) targetButton.getTag());
 						String buttonText = targetButton.getText().toString();
 
 						if ((!mainHash.contains(buttonText))
@@ -274,7 +332,8 @@ public class Instrument extends Activity {
 								if (buttonRect.contains(xVal, yVal)) {
 									/*sp.play(soundList.get(buttonText), 1, 1, 0,
 											0, 1);*/
-									playSound(soundList.get(buttonText));
+                                    piano.playSound(noteNumber);
+//                                    playSound(soundList.get(buttonText));
 									breakout = true;
 									mainHash.add(buttonText);
 								}
@@ -299,6 +358,7 @@ public class Instrument extends Activity {
 				int[] location = new int[2];
 				Boolean breakout = false;
 				for (TextView targetButton : buttonList) {
+                    int noteNumber = Integer.parseInt((String) targetButton.getTag());
 					String buttonText = targetButton.getText().toString();
 					targetButton.getLocationOnScreen(location);
 
@@ -310,7 +370,8 @@ public class Instrument extends Activity {
 					if (buttonRect.contains(xVal, yVal)) {
 						/*sp.play(soundList.get(targetButton.getText()), 1, 1, 0,
 								0, 1);*/
-						playSound(soundList.get(targetButton.getText()));
+                        piano.playSound(noteNumber);
+//                        playSound(soundList.get(targetButton.getText()));
 						breakout = true;
 						mainHash.add(buttonText);
 					}
@@ -332,6 +393,7 @@ public class Instrument extends Activity {
 				Boolean breakout = false;
 				int removeInt = -1;
 				for (TextView targetButton : buttonList) {
+                    int noteNumber = Integer.parseInt((String) targetButton.getTag());
 					String buttonText = targetButton.getText().toString();
 					targetButton.getLocationOnScreen(location);
 					float rectX = location[0];
@@ -343,7 +405,8 @@ public class Instrument extends Activity {
 					if (buttonRect.contains(xVal, yVal)) {
 						/*sp.play(soundList.get(targetButton.getText()), 1, 1, 0,
 								0, 1);*/
-						playSound(soundList.get(targetButton.getText()));
+                        piano.playSound(noteNumber);
+//                        playSound(soundList.get(targetButton.getText()));
 						breakout = true;
 						noMove = true;
 						subHash.add(buttonText);

@@ -32,6 +32,7 @@ public class Instrument extends Activity {
 
     Piano piano;
     Replayer replayer;
+    HashMap<Integer, Note> notes;
 
 	TextView b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15,
 			b16;
@@ -196,13 +197,13 @@ public class Instrument extends Activity {
 //                    String title = songJson.getString(TAG_TITLE);
 //                    String createdAt = songJson.getString(TAG_CREATED_AT);
                     JSONArray notesJson = songJson.getJSONArray("notes");
+                    notes = new HashMap<Integer, Note>(notesJson.length(), 1);
 
                     for (int j = 0; j < notesJson.length(); j++) {
                         Note note = new Note();
                         JSONObject noteJson = notesJson.getJSONObject(j);
                         note.setTime(noteJson.getInt("time"));
                         note.setNoteNumber(noteJson.getInt("note"));
-
 
                         note.setKeyCode(noteJson.getInt("keyCode"));
                         note.setSegmentId(noteJson.getInt("segmentId"));
@@ -213,6 +214,7 @@ public class Instrument extends Activity {
                             isKeyboardDown = true;
                         }
                         note.setKeyboardDown(isKeyboardDown);
+                        notes.put(note.getNoteNumber(), note);
 
                         song.addNote(note);
                     }
@@ -289,6 +291,8 @@ public class Instrument extends Activity {
 										/*sp.play(soundList.get(buttonText), 1,
 												1, 0, 0, 1);*/
                                         piano.playSound(noteNumber);
+                                        Note n = notes.get(noteNumber);
+                                       // replayer.addNotePressed(notes[noteNumber]);
 //										playSound(soundList.get(buttonText));
 										breakout = true;
 										subHash.add(buttonText);
@@ -333,6 +337,8 @@ public class Instrument extends Activity {
 									/*sp.play(soundList.get(buttonText), 1, 1, 0,
 											0, 1);*/
                                     piano.playSound(noteNumber);
+                                    Note n = notes.get(noteNumber);
+                                    //replayer.addNotePressed(notes[noteNumber]);
 //                                    playSound(soundList.get(buttonText));
 									breakout = true;
 									mainHash.add(buttonText);
@@ -371,6 +377,8 @@ public class Instrument extends Activity {
 						/*sp.play(soundList.get(targetButton.getText()), 1, 1, 0,
 								0, 1);*/
                         piano.playSound(noteNumber);
+                        Note n = notes.get(noteNumber);
+                        //replayer.addNotePressed(notes[noteNumber]);
 //                        playSound(soundList.get(targetButton.getText()));
 						breakout = true;
 						mainHash.add(buttonText);
@@ -406,6 +414,8 @@ public class Instrument extends Activity {
 						/*sp.play(soundList.get(targetButton.getText()), 1, 1, 0,
 								0, 1);*/
                         piano.playSound(noteNumber);
+                        Note n = notes.get(noteNumber);
+                        //replayer.addNotePressed(notes[noteNumber]);
 //                        playSound(soundList.get(targetButton.getText()));
 						breakout = true;
 						noMove = true;
@@ -419,6 +429,8 @@ public class Instrument extends Activity {
 
 				}
 			}
+            //replayer.notify();
+
 			if (action == MotionEvent.ACTION_POINTER_UP) {
 				int i = event.getPointerCount();
 				if (event.getPointerCount() == 2)
