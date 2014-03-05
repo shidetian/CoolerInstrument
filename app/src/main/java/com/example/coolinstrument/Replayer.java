@@ -71,12 +71,10 @@ public class Replayer {
                     }
                 }
 
-                piano.playSound((getCurrentNote().getNoteNumber() % 12) + 45);
+                piano.playSound(getCurrentNote().getNoteNumber());
                 while (!notes.empty())
-                    piano.playSound((notes.pop().getNoteNumber() % 12) + 45);
+                    piano.playSound(notes.pop().getNoteNumber());
             }
-
-            _playNextNote();
     }
 
     public void pause() {

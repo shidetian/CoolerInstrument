@@ -131,24 +131,29 @@ public class Instrument extends Activity {
 	    }
 	}
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
-        return super.onCreateOptionsMenu(menu);
+    public void onSongsClick(View view) {
+        Intent songsIntent = new Intent(getApplicationContext(), SongsActivity.class);
+        startActivityForResult(songsIntent, SONG_ID_REQUEST);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId())
-        {
-            case R.id.songs:
-                Intent songsIntent = new Intent(getApplicationContext(), SongsActivity.class);
-                startActivityForResult(songsIntent, SONG_ID_REQUEST);
-                break;
-        }
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater=getMenuInflater();
+//        inflater.inflate(R.menu.main, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch(item.getItemId())
+//        {
+//            case R.id.songs:
+//                Intent songsIntent = new Intent(getApplicationContext(), SongsActivity.class);
+//                startActivityForResult(songsIntent, SONG_ID_REQUEST);
+//                break;
+//        }
+//        return true;
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -192,10 +197,6 @@ public class Instrument extends Activity {
                     // Getting JSON Array node
                     JSONObject songJson = new JSONObject(jsonStr);
 
-
-//                    String id = songJson.getString(TAG_ID);
-//                    String title = songJson.getString(TAG_TITLE);
-//                    String createdAt = songJson.getString(TAG_CREATED_AT);
                     JSONArray notesJson = songJson.getJSONArray("notes");
                     notes = new HashMap<Integer, Note>(notesJson.length(), 1);
 
