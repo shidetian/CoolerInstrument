@@ -103,7 +103,8 @@ public class Piano {
 
     public void playSound(int noteNumber){
         Log.d("note number:   ", "hi" + noteNumber);
-        sp.play(soundList.get(noteNumber), 1, 1, 0, 0, 1);
+        if (soundList.containsKey(noteNumber))
+            sp.play(soundList.get(noteNumber), 1, 1, 0, 0, 1);
 //        if (recording){
 //            currentSong.put(System.currentTimeMillis() - startTime, note);
 //        }

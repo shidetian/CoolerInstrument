@@ -1,12 +1,13 @@
 package com.example.coolinstrument;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Handler;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import java.util.ArrayList;
-import java.util.EventListener;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Stack;
@@ -19,19 +20,20 @@ public class Replayer {
     private Timer playbackTimer = new Timer();
     private int currentIndex;
     private Piano piano;
-    private Stack<Note> notes;
-    private Stack<Note> notesPressed;
+    private Stack<Integer> notes;
+    private int notePausedAt = -1;
+    private HashMap<Integer, TextView> noteToTextview;
 
-    public Replayer(Song song, Context context) {
-        this(song, new Piano(context));
+    public Replayer(Song song, Context context, HashMap<Integer, TextView> noteToTextview) {
+        this(song, new Piano(context), noteToTextview);
     }
 
-    public Replayer(Song song, Piano piano) {
+    public Replayer(Song song, Piano piano, HashMap<Integer, TextView> noteToTextview) {
         this.song = song;
         this.piano = piano;
         this.currentIndex = 0;
-        this.notes = new Stack<Note>();
-        this.notesPressed = new Stack<Note>();
+        this.notes = new Stack<Integer>();
+        this.noteToTextview = noteToTextview;
     }
 
     public void reset() {
@@ -51,35 +53,34 @@ public class Replayer {
     }
 
     public void _playNextNote() {
-            if (currentIndex >= song.size())
-                return;
+        if (currentIndex >= song.size())
+            return;
 
-            Note note = getCurrentNote();
-            incrementCurrentIndex();
+        int temp;
+        Note note = getCurrentNote();
+        incrementCurrentIndex();
+        if (noteToTextview.containsKey(note.getNoteNumber())){
+            noteToTextview.get(note.getNoteNumber()).setBackgroundColor(Color.GREEN);
+        }
 
-            if (note.isKeyboardDown()){
-                while (getWaitTime() == 0){
-                    if (getCurrentNote().isKeyboardDown())
-                        notes.push(getCurrentNote());
-                    incrementCurrentIndex();
-                }
-
-                while (!isNotePressed(note)){
-                    try{
-                        this.wait();
-                    } catch (InterruptedException e){
+        if (note.isKeyboardDown()){
+            while (getWaitTime() == 0){
+                if (getCurrentNote().isKeyboardDown()){
+                    temp = getCurrentNote().getNoteNumber();
+                    notes.push(temp);
+                    if (noteToTextview.containsKey(temp)){
+                        noteToTextview.get(temp).setBackgroundColor(Color.BLUE);
                     }
                 }
-
-                piano.playSound(getCurrentNote().getNoteNumber());
-                while (!notes.empty())
-                    piano.playSound(notes.pop().getNoteNumber());
+                incrementCurrentIndex();
             }
+            notePausedAt = note.getNoteNumber();
+        }
     }
 
     public void pause() {
-        notesPressed.removeAllElements();
         playbackTimer.cancel();
+        notePausedAt = -1;
     }
 
     public Song getSong() {
@@ -90,9 +91,27 @@ public class Replayer {
         this.song = song;
     }
 
-    public void addNotePressed(Note note){
-        if (note != null)
-            notesPressed.push(note);
+    public void notePressed(int noteNumber){
+        if (notePausedAt == noteNumber){
+            if (noteToTextview.containsKey(noteNumber)){
+                noteToTextview.get(noteNumber).setBackgroundColor(Color.BLACK);
+            }
+
+            int temp;
+            while (!notes.empty()){
+                temp = notes.pop();
+                piano.playSound(temp);
+                if (noteToTextview.containsKey(temp)){
+                    noteToTextview.get(temp).setBackgroundColor(Color.BLACK);
+                }
+            }
+            playbackTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    _playNextNote();
+                }
+            }, getWaitTime());
+        }
     }
 
     public int getCurrentIndex() {
@@ -115,15 +134,5 @@ public class Replayer {
         } else {
             return song.getNote(currentIndex).getTime() - song.getNote(currentIndex - 1).getTime();
         }
-    }
-
-    private boolean isNotePressed(Note note){
-        while (!notesPressed.empty()){
-            if (note.getNoteNumber() == notesPressed.pop().getNoteNumber()){
-                notesPressed.removeAllElements();
-                return true;
-            }
-        }
-        return false;
     }
 }

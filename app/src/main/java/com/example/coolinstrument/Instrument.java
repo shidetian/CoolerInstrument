@@ -7,6 +7,7 @@ import java.util.HashSet;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.RectF;
 import android.media.SoundPool;
 import android.os.AsyncTask;
@@ -32,7 +33,8 @@ public class Instrument extends Activity {
 
     Piano piano;
     Replayer replayer;
-    HashMap<Integer, Note> notes;
+    HashMap<Integer, TextView> noteToTextview = new HashMap<Integer, TextView>(16, 1);
+    Object syncToken = new Object();
 
 	TextView b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15,
 			b16;
@@ -98,15 +100,15 @@ public class Instrument extends Activity {
 		buttonList.add(b15);
 		buttonList.add(b16);
 
-		for (View thisButton : buttonList) {
+		for (TextView thisButton : buttonList) {
 //			View targetButton = thisButton;
 			thisButton.setSoundEffectsEnabled(false);
+            noteToTextview.put(Integer.parseInt((String) thisButton.getTag()), thisButton);
 		}
 
         piano = new Piano(this);
         recorder = new Recorder();
-        replayer = new Replayer(new Song(), piano);
-
+        replayer = new Replayer(new Song(), piano, noteToTextview);
 	}
 
     public void onPlaybackToggled(final View view){
@@ -198,7 +200,6 @@ public class Instrument extends Activity {
                     JSONObject songJson = new JSONObject(jsonStr);
 
                     JSONArray notesJson = songJson.getJSONArray("notes");
-                    notes = new HashMap<Integer, Note>(notesJson.length(), 1);
 
                     for (int j = 0; j < notesJson.length(); j++) {
                         Note note = new Note();
@@ -215,7 +216,6 @@ public class Instrument extends Activity {
                             isKeyboardDown = true;
                         }
                         note.setKeyboardDown(isKeyboardDown);
-                        notes.put(note.getNoteNumber(), note);
 
                         song.addNote(note);
                     }
@@ -292,8 +292,7 @@ public class Instrument extends Activity {
 										/*sp.play(soundList.get(buttonText), 1,
 												1, 0, 0, 1);*/
                                         piano.playSound(noteNumber);
-                                        Note n = notes.get(noteNumber);
-                                       // replayer.addNotePressed(notes[noteNumber]);
+                                        replayer.notePressed(noteNumber);
 //										playSound(soundList.get(buttonText));
 										breakout = true;
 										subHash.add(buttonText);
@@ -338,8 +337,7 @@ public class Instrument extends Activity {
 									/*sp.play(soundList.get(buttonText), 1, 1, 0,
 											0, 1);*/
                                     piano.playSound(noteNumber);
-                                    Note n = notes.get(noteNumber);
-                                    //replayer.addNotePressed(notes[noteNumber]);
+                                    replayer.notePressed(noteNumber);
 //                                    playSound(soundList.get(buttonText));
 									breakout = true;
 									mainHash.add(buttonText);
@@ -378,8 +376,7 @@ public class Instrument extends Activity {
 						/*sp.play(soundList.get(targetButton.getText()), 1, 1, 0,
 								0, 1);*/
                         piano.playSound(noteNumber);
-                        Note n = notes.get(noteNumber);
-                        //replayer.addNotePressed(notes[noteNumber]);
+                        replayer.notePressed(noteNumber);
 //                        playSound(soundList.get(targetButton.getText()));
 						breakout = true;
 						mainHash.add(buttonText);
@@ -415,8 +412,7 @@ public class Instrument extends Activity {
 						/*sp.play(soundList.get(targetButton.getText()), 1, 1, 0,
 								0, 1);*/
                         piano.playSound(noteNumber);
-                        Note n = notes.get(noteNumber);
-                        //replayer.addNotePressed(notes[noteNumber]);
+                        replayer.notePressed(noteNumber);
 //                        playSound(soundList.get(targetButton.getText()));
 						breakout = true;
 						noMove = true;
@@ -430,7 +426,6 @@ public class Instrument extends Activity {
 
 				}
 			}
-            //replayer.notify();
 
 			if (action == MotionEvent.ACTION_POINTER_UP) {
 				int i = event.getPointerCount();
