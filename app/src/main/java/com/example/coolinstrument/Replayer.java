@@ -108,15 +108,15 @@ public class Replayer {
 
             dumpNotes(true);
         }
-        _playNextNote();
-        /*
+        //_playNextNote();
+
         playbackTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 _playNextNote();
             }
         }, getWaitTime());
-        */
+
     }
 
     public void pause() {
@@ -139,15 +139,15 @@ public class Replayer {
         if (notePausedAt == noteNumber){
             UINotes.push(new NoteColor(noteNumber, Color.BLACK));
             dumpNotes(true);
-            _playNextNote();
-            /*
+            //_playNextNote();
+
             playbackTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     _playNextNote();
                 }
             }, getWaitTime());
-            */
+
         }
     }
 

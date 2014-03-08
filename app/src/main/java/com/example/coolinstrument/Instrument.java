@@ -221,6 +221,7 @@ public class Instrument extends Activity {
                     }
 
                     replayer.setSong(song);
+                    replayer.reset();
                     //replayer.start();
 
                 } catch (JSONException e) {
