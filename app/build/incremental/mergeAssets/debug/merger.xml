@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger>
+
+    <dataSet config="ComAndroidSupportAppcompatV71901.aar" >
+        <source path="E:\_Cornell Spring 2014\CS 5412 - Cloud Computing\CoolerInstrument\app\build\exploded-bundles\ComAndroidSupportAppcompatV71901.aar\assets" />
+    </dataSet>
+    <dataSet config="main" >
+        <source path="E:\_Cornell Spring 2014\CS 5412 - Cloud Computing\CoolerInstrument\app\src\main\assets" />
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="E:\_Cornell Spring 2014\CS 5412 - Cloud Computing\CoolerInstrument\app\src\debug\assets" />
+    </dataSet>
+
+</merger>

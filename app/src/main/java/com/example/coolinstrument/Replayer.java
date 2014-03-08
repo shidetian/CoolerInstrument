@@ -59,11 +59,12 @@ public class Replayer {
         int temp;
         Note note = getCurrentNote();
         incrementCurrentIndex();
-        if (noteToTextview.containsKey(note.getNoteNumber())){
-            noteToTextview.get(note.getNoteNumber()).setBackgroundColor(Color.GREEN);
-        }
 
         if (note.isKeyboardDown()){
+            notePausedAt = note.getNoteNumber();
+            if (noteToTextview.containsKey(note.getNoteNumber())){
+                noteToTextview.get(note.getNoteNumber()).setBackgroundColor(Color.GREEN);
+            }
             while (getWaitTime() == 0){
                 if (getCurrentNote().isKeyboardDown()){
                     temp = getCurrentNote().getNoteNumber();
@@ -74,7 +75,6 @@ public class Replayer {
                 }
                 incrementCurrentIndex();
             }
-            notePausedAt = note.getNoteNumber();
         }
     }
 
