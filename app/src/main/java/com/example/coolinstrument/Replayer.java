@@ -27,6 +27,7 @@ public class Replayer {
     private HashMap<Integer, TextView> noteToTextview;
     private Activity act = new Activity();
     private Stack<NoteColor> UINotes;
+    private int previousIndex = 0;
 
     public Replayer(Song song, Context context, HashMap<Integer, TextView> noteToTextview) {
         this(song, new Piano(context), noteToTextview);
@@ -53,23 +54,28 @@ public class Replayer {
 
     public void reset() {
         currentIndex = 0;
+        previousIndex = 0;
     }
 
     public void start() {
         if (currentIndex == song.size()) {
             currentIndex = 0;
+            return;
         }
 
         if (song.size() == 0) {
             return ;
         }
 
+        currentIndex = previousIndex;
         _playNextNote();
     }
 
     public void _playNextNote() {
         if (currentIndex >= song.size())
             return;
+
+        previousIndex = getCurrentIndex();
 
         int temp;
         int max = -1;
@@ -108,15 +114,12 @@ public class Replayer {
 
             dumpNotes(true);
         }
-        //_playNextNote();
-
         playbackTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 _playNextNote();
             }
         }, getWaitTime());
-
     }
 
     public void pause() {
@@ -139,7 +142,6 @@ public class Replayer {
         if (notePausedAt == noteNumber){
             UINotes.push(new NoteColor(noteNumber, Color.BLACK));
             dumpNotes(true);
-            //_playNextNote();
 
             playbackTimer.schedule(new TimerTask() {
                 @Override
@@ -147,7 +149,6 @@ public class Replayer {
                     _playNextNote();
                 }
             }, getWaitTime());
-
         }
     }
 
