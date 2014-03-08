@@ -1,5 +1,6 @@
 package com.example.coolinstrument;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,6 +25,8 @@ public class Replayer {
     private Stack<Integer> notes;
     private int notePausedAt = -1;
     private HashMap<Integer, TextView> noteToTextview;
+    private Activity act = new Activity();
+    private Stack<NoteColor> UINotes;
 
     public Replayer(Song song, Context context, HashMap<Integer, TextView> noteToTextview) {
         this(song, new Piano(context), noteToTextview);
@@ -33,7 +37,18 @@ public class Replayer {
         this.piano = piano;
         this.currentIndex = 0;
         this.notes = new Stack<Integer>();
+        this.UINotes = new Stack<NoteColor>();
         this.noteToTextview = noteToTextview;
+    }
+
+    public class NoteColor {
+        int note;
+        int color;
+
+        public NoteColor (int note, int color){
+            this.note = note;
+            this.color = color;
+        }
     }
 
     public void reset() {
@@ -57,35 +72,58 @@ public class Replayer {
             return;
 
         int temp;
+        int max = -1;
         Note note = getCurrentNote();
         incrementCurrentIndex();
 
-        if (noteToTextview.containsKey(note.getNoteNumber()) && note.isKeyboardDown()){
-            notePausedAt = note.getNoteNumber();
-            noteToTextview.get(note.getNoteNumber()).setBackgroundColor(Color.GREEN);
+        if (note.isKeyboardDown()){
+            if (noteToTextview.containsKey(note.getNoteNumber())){
+                max = note.getNoteNumber();
+            }
+            else{
+                notes.push(note.getNoteNumber());
+            }
             while (getWaitTime() == 0){
-                if (getCurrentNote().isKeyboardDown()){
-                    temp = getCurrentNote().getNoteNumber();
-                    notes.push(temp);
-                    if (noteToTextview.containsKey(temp)){
-                        noteToTextview.get(temp).setBackgroundColor(Color.BLUE);
+                temp = getCurrentNote().getNoteNumber();
+                if (noteToTextview.containsKey(temp)){
+                    if (temp > max){
+                        if (noteToTextview.containsKey(max))
+                            UINotes.push(new NoteColor(max, Color.BLUE));
+                        notes.push(max);
+                        max = temp;
+                    }
+                    else{
+                        notes.push(temp);
+                        UINotes.push(new NoteColor(temp, Color.BLUE));
                     }
                 }
                 incrementCurrentIndex();
             }
+            if (max > -1){
+                notePausedAt = max;
+                UINotes.push(new NoteColor(max, Color.GREEN));
+                updateUI();
+                return;
+            }
+
+            dumpNotes(true);
         }
-        else {
-            playbackTimer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    _playNextNote();
-                }
-            }, getWaitTime());
-        }
+        _playNextNote();
+        /*
+        playbackTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                _playNextNote();
+            }
+        }, getWaitTime());
+        */
     }
 
     public void pause() {
         playbackTimer.cancel();
+        if (noteToTextview.containsKey(notePausedAt))
+            UINotes.push(new NoteColor(notePausedAt, Color.BLACK));
+        dumpNotes(false);
         notePausedAt = -1;
     }
 
@@ -99,25 +137,41 @@ public class Replayer {
 
     public void notePressed(int noteNumber){
         if (notePausedAt == noteNumber){
-            if (noteToTextview.containsKey(noteNumber)){
-                noteToTextview.get(noteNumber).setBackgroundColor(Color.BLACK);
-            }
-
-            int temp;
-            while (!notes.empty()){
-                temp = notes.pop();
-                piano.playSound(temp);
-                if (noteToTextview.containsKey(temp)){
-                    noteToTextview.get(temp).setBackgroundColor(Color.BLACK);
-                }
-            }
+            UINotes.push(new NoteColor(noteNumber, Color.BLACK));
+            dumpNotes(true);
+            _playNextNote();
+            /*
             playbackTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     _playNextNote();
                 }
             }, getWaitTime());
+            */
         }
+    }
+
+    public void dumpNotes(boolean play){
+        int temp;
+        while (!notes.empty()){
+            temp = notes.pop();
+            if (play)
+                piano.playSound(temp);
+            if (noteToTextview.containsKey(temp))
+                UINotes.push(new NoteColor(temp, Color.BLACK));
+        }
+        updateUI();
+    }
+
+    public void updateUI(){
+        act.runOnUiThread(new Runnable(){
+            @Override
+            public void run(){
+                for (NoteColor n : UINotes){
+                    noteToTextview.get(n.note).setBackgroundColor(n.color);
+                }
+            }
+        });
     }
 
     public int getCurrentIndex() {
