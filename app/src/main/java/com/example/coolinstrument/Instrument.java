@@ -33,7 +33,7 @@ public class Instrument extends Activity {
 
     Piano piano;
     Replayer replayer;
-    HashMap<Integer, TextView> noteToTextview = new HashMap<Integer, TextView>(16, 1);
+    HashMap<Integer, TextView> noteToTextview = new HashMap<Integer, TextView>(16);
     Object syncToken = new Object();
 
 	TextView b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15,
@@ -221,7 +221,7 @@ public class Instrument extends Activity {
                     }
 
                     replayer.setSong(song);
-                    replayer.start();
+                    //replayer.start();
 
                 } catch (JSONException e) {
                     e.printStackTrace();

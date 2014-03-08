@@ -60,11 +60,9 @@ public class Replayer {
         Note note = getCurrentNote();
         incrementCurrentIndex();
 
-        if (note.isKeyboardDown()){
+        if (noteToTextview.containsKey(note.getNoteNumber()) && note.isKeyboardDown()){
             notePausedAt = note.getNoteNumber();
-            if (noteToTextview.containsKey(note.getNoteNumber())){
-                noteToTextview.get(note.getNoteNumber()).setBackgroundColor(Color.GREEN);
-            }
+            noteToTextview.get(note.getNoteNumber()).setBackgroundColor(Color.GREEN);
             while (getWaitTime() == 0){
                 if (getCurrentNote().isKeyboardDown()){
                     temp = getCurrentNote().getNoteNumber();
@@ -75,6 +73,14 @@ public class Replayer {
                 }
                 incrementCurrentIndex();
             }
+        }
+        else {
+            playbackTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    _playNextNote();
+                }
+            }, getWaitTime());
         }
     }
 
