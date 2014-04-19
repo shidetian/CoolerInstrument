@@ -7,5 +7,5 @@ import me.kutrumbos.DdpClient;
  */
 public class Global {
     public static DdpClient client;
-    public static String serverUrl = "amusing3.meteor.com";
+    public static String serverUrl = "localhost";
 }
