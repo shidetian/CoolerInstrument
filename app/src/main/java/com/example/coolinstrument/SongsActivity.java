@@ -27,7 +27,7 @@ public class SongsActivity extends ListActivity {
 
 
     // URL to get contacts JSON
-    private static String url = "http://amusing3.meteor.com/songsApi";
+    private static String url = "http://amusing2.meteor.com/songsApi";
 
     // JSON Node names
     private static final String TAG_TITLE = "title";

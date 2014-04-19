@@ -1,4 +1,4 @@
-<!-- From: file:/E:/_Cornell%20Spring%202014/CS%205412%20-%20Cloud%20Computing/CoolerInstrument/app/src/main/AndroidManifest.xml --><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.example.coolinstrument">
+<!-- From: file:/home/lam/AndroidStudioProjects/Cool/app/src/main/AndroidManifest.xml --><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.example.coolinstrument">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 

@@ -304,4 +304,4 @@
         android:layout_alignTop="@+id/playButton"
         android:layout_toRightOf="@+id/playButton" />
 
-</RelativeLayout><!-- From: file:/E:/_Cornell%20Spring%202014/CS%205412%20-%20Cloud%20Computing/CoolerInstrument/app/src/main/res/layout/instrument.xml -->
+</RelativeLayout><!-- From: file:/home/lam/AndroidStudioProjects/Cool/app/src/main/res/layout/instrument.xml -->

@@ -5,6 +5,7 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.util.Log;
 
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -16,7 +17,6 @@ public class Piano {
     private HashMap<Integer, Integer> soundList;
     
     public Piano(Context context) {
-
         sp = new SoundPool(15, AudioManager.STREAM_MUSIC, 0);
         soundList = new HashMap<Integer, Integer>();
 
@@ -102,7 +102,13 @@ public class Piano {
     }
 
     public void playSound(int noteNumber){
-        Log.d("note number:   ", "hi" + noteNumber);
+        Object[] methodArgs = new Object[3];
+        methodArgs[0] = noteNumber;
+        methodArgs[1] = new Date().toString();
+        methodArgs[2] = "connectionId"; // TODO: find where to get the info
+
+        Global.client.call("broadcastNotePlayed", methodArgs);
+
         if (soundList.containsKey(noteNumber))
             sp.play(soundList.get(noteNumber), 1, 1, 0, 0, 1);
 //        if (recording){

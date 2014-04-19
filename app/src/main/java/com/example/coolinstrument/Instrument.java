@@ -1,6 +1,8 @@
 package com.example.coolinstrument;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -26,6 +28,8 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import me.kutrumbos.DdpClient;
 
 public class Instrument extends Activity {
     public static final int SONG_ID_REQUEST = 1;
@@ -58,10 +62,9 @@ public class Instrument extends Activity {
 //	TreeMap<Long, Integer> currentSong = new TreeMap<Long, Integer>();
 	long startTime = -1;
 	boolean recording = false;
-	
-	@Override
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.instrument);
@@ -109,7 +112,30 @@ public class Instrument extends Activity {
         piano = new Piano(this);
         recorder = new Recorder();
         replayer = new Replayer(new Song(), piano, noteToTextview);
-	}
+
+        // connect to meteor server
+        try {
+            Global.client = new DdpClient(Global.serverUrl, 3000);
+            Global.client.connect();
+
+            try {
+                Thread.sleep(5000);
+
+                System.out.println("calling remote method...");
+
+                // TODO: pick and join a game
+                Object[] methodArgs = new Object[1];
+                methodArgs[0] = new Date().toString();
+                Global.client.call("update_time", methodArgs);
+
+            } catch (InterruptedException e) {
+
+                e.printStackTrace();
+            }
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void onPlaybackToggled(final View view){
         if (((ToggleButton) view).isChecked()){
