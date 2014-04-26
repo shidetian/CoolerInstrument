@@ -106,8 +106,9 @@ public class Piano {
         methodArgs[0] = noteNumber;
         methodArgs[1] = new Date().toString();
         methodArgs[2] = "connectionId"; // TODO: find where to get the info
+        methodArgs[2] = "gameId"; // TODO: find where to get the info
 
-        Global.client.call("broadcastNotePlayed", methodArgs);
+        Global.client.call("broadcastNote", methodArgs);
 
         if (soundList.containsKey(noteNumber))
             sp.play(soundList.get(noteNumber), 1, 1, 0, 0, 1);

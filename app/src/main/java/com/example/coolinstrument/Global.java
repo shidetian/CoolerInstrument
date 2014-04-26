@@ -7,5 +7,5 @@ import me.kutrumbos.DdpClient;
  */
 public class Global {
     public static DdpClient client;
-    public static String serverUrl = "localhost";
+    public static String serverUrl = "10.32.61.71";
 }
