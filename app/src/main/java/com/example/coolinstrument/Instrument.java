@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Observer;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -113,27 +114,33 @@ public class Instrument extends Activity {
         recorder = new Recorder();
         replayer = new Replayer(new Song(), piano, noteToTextview);
 
-        // connect to meteor server
-        try {
-            Global.client = new DdpClient(Global.serverUrl, 3000);
-            Global.client.connect();
-
+        for (int i = 0; i < 50; i++) {
+            // connect to meteor server
             try {
-                Thread.sleep(5000);
+                Global.client = new DdpClient(Global.serverUrl, 8000);
+                Observer obs = new NoteObserver(piano);
+                Global.client.addObserver(obs);
+                Global.client.connect();
 
-                System.out.println("calling remote method...");
+                try {
+                    Thread.sleep(5000);
 
-                // TODO: pick and join a game
-                Object[] methodArgs = new Object[1];
-                methodArgs[0] = new Date().toString();
-                Global.client.call("update_time", methodArgs);
+                    Global.client.subscribe("datas", new Object[]{});
 
-            } catch (InterruptedException e) {
+                    System.out.println("calling remote method...");
 
+                    // TODO: pick and join a game
+                    Object[] methodArgs = new Object[1];
+                    methodArgs[0] = new Date().toString();
+                    Global.client.call("update_time", methodArgs);
+
+                } catch (InterruptedException e) {
+
+                    e.printStackTrace();
+                }
+            } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
         }
     }
 
@@ -318,7 +325,7 @@ public class Instrument extends Activity {
 									if (buttonRect.contains(xVal, yVal)) {
 										/*sp.play(soundList.get(buttonText), 1,
 												1, 0, 0, 1);*/
-                                        piano.playSound(noteNumber);
+                                        piano.playSound(noteNumber, true);
                                         replayer.notePressed(noteNumber);
 //										playSound(soundList.get(buttonText));
 										breakout = true;
@@ -363,7 +370,7 @@ public class Instrument extends Activity {
 								if (buttonRect.contains(xVal, yVal)) {
 									/*sp.play(soundList.get(buttonText), 1, 1, 0,
 											0, 1);*/
-                                    piano.playSound(noteNumber);
+                                    piano.playSound(noteNumber, true);
                                     replayer.notePressed(noteNumber);
 //                                    playSound(soundList.get(buttonText));
 									breakout = true;
@@ -402,7 +409,7 @@ public class Instrument extends Activity {
 					if (buttonRect.contains(xVal, yVal)) {
 						/*sp.play(soundList.get(targetButton.getText()), 1, 1, 0,
 								0, 1);*/
-                        piano.playSound(noteNumber);
+                        piano.playSound(noteNumber, true);
                         replayer.notePressed(noteNumber);
 //                        playSound(soundList.get(targetButton.getText()));
 						breakout = true;
@@ -438,7 +445,7 @@ public class Instrument extends Activity {
 					if (buttonRect.contains(xVal, yVal)) {
 						/*sp.play(soundList.get(targetButton.getText()), 1, 1, 0,
 								0, 1);*/
-                        piano.playSound(noteNumber);
+                        piano.playSound(noteNumber, true);
                         replayer.notePressed(noteNumber);
 //                        playSound(soundList.get(targetButton.getText()));
 						breakout = true;

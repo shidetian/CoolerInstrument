@@ -157,7 +157,7 @@ public class Replayer {
         while (!notes.empty()){
             temp = notes.pop();
             if (play)
-                piano.playSound(temp);
+                piano.playSound(temp, true);
             if (noteToTextview.containsKey(temp))
                 UINotes.push(new NoteColor(temp, Color.BLACK));
         }

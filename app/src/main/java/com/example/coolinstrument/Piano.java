@@ -101,14 +101,16 @@ public class Piano {
 
     }
 
-    public void playSound(int noteNumber){
-        Object[] methodArgs = new Object[3];
-        methodArgs[0] = noteNumber;
-        methodArgs[1] = new Date().toString();
-        methodArgs[2] = "connectionId"; // TODO: find where to get the info
-        methodArgs[2] = "gameId"; // TODO: find where to get the info
+    public void playSound(int noteNumber, boolean real){
+        if (real) {
+            Object[] methodArgs = new Object[4];
+            methodArgs[0] = noteNumber;
+            methodArgs[1] = new Date().toString();
+            methodArgs[2] = "connectionId"; // TODO: find where to get the info
+            methodArgs[3] = "gameId"; // TODO: find where to get the info
 
-        Global.client.call("broadcastNote", methodArgs);
+            Global.client.call("broadcastNote", methodArgs);
+        }
 
         if (soundList.containsKey(noteNumber))
             sp.play(soundList.get(noteNumber), 1, 1, 0, 0, 1);
