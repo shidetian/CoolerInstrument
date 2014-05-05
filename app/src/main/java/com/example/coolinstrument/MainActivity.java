@@ -11,8 +11,8 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		Intent goToInstrument=new Intent(this, Instrument.class);
-		startActivity(goToInstrument);
+        Intent goToLobby = new Intent(this, Lobby.class);
+        startActivity(goToLobby);
 	}
 
 	@Override

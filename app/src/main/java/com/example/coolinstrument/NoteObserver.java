@@ -2,6 +2,8 @@ package com.example.coolinstrument;
 
 import java.util.Observable;
 import java.util.Observer;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class NoteObserver implements Observer {
     private Piano piano;
@@ -12,13 +14,21 @@ public class NoteObserver implements Observer {
 
     @Override
     public void update(Observable client, Object msg) {
-        if (msg instanceof String && ((String) msg).contains("noteNumber")) {
-            int begin = ((String) msg).indexOf("noteNumber") + 12;
-            String note = ((String) msg).substring(begin);
-            int end = note.indexOf(',');
-            note = note.substring(0,end);
-            piano.playSound(Integer.parseInt(note), false);
+        try {
+            JSONObject info = new JSONObject((String) msg);
+            if (((String) msg).contains("collection")
+                    && info.getString("collection").equals("datas")
+                    && ((String) msg).contains("noteNumber")) {
+                JSONObject fields = info.getJSONObject("fields");
+                String gameID = fields.getString("gameId");
+                String pID = fields.getString("connectionId");
+                if (Global.gameID.equals(gameID) && !Global.pID.equals(pID)) {
+                    int note = fields.getInt("noteNumber");
+                    piano.playSound(note, false);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-
 }

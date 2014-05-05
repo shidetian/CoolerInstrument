@@ -1047,11 +1047,13 @@ containing a value of this type.
         public static final int activity_songs=0x7f030019;
         public static final int instrument=0x7f03001a;
         public static final int list_songs=0x7f03001b;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001c;
+        public static final int lobby=0x7f03001c;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001d;
     }
     public static final class menu {
-        public static final int main=0x7f0d0000;
-        public static final int songs=0x7f0d0001;
+        public static final int lobby=0x7f0d0000;
+        public static final int main=0x7f0d0001;
+        public static final int songs=0x7f0d0002;
     }
     public static final class raw {
         public static final int a0=0x7f050000;
@@ -1181,7 +1183,8 @@ containing a value of this type.
         public static final int action_settings=0x7f0b000d;
         public static final int app_name=0x7f0b000e;
         public static final int hello_world=0x7f0b000f;
-        public static final int title_activity_songs=0x7f0b0010;
+        public static final int title_activity_lobby=0x7f0b0010;
+        public static final int title_activity_songs=0x7f0b0011;
     }
     public static final class style {
         /** 

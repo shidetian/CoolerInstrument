@@ -17,6 +17,8 @@
         </activity>
         <activity android:label="@string/title_activity_songs" android:name="com.example.coolinstrument.SongsActivity">
         </activity>
+        <activity android:label="@string/title_activity_lobby" android:name="com.example.coolinstrument.Lobby">
+        </activity>
     </application>
 
 </manifest>

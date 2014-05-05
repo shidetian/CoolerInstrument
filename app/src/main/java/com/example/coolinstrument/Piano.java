@@ -106,8 +106,8 @@ public class Piano {
             Object[] methodArgs = new Object[4];
             methodArgs[0] = noteNumber;
             methodArgs[1] = new Date().toString();
-            methodArgs[2] = "connectionId"; // TODO: find where to get the info
-            methodArgs[3] = "gameId"; // TODO: find where to get the info
+            methodArgs[2] = Global.pID;
+            methodArgs[3] = Global.gameID;
 
             Global.client.call("broadcastNote", methodArgs);
         }

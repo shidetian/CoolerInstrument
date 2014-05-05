@@ -144,7 +144,7 @@ public class SongsActivity extends ListActivity {
                      * */
                     Intent returnIntent = new Intent();
 
-                    returnIntent.putExtra("songUrl", "http://amusing3.meteor.com/songApi/" + songData.get("_id"));
+                    returnIntent.putExtra("songUrl", "http://amusing2.meteor.com/songApi/" + songData.get("_id"));
                     setResult(RESULT_OK, returnIntent);
 
                     finish();

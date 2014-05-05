@@ -555,6 +555,7 @@
     <string name="action_settings">Settings</string>
     <string name="app_name">CoolInstrument</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_lobby">Lobby</string>
     <string name="title_activity_songs">Songs</string>
     <!-- From: file:/Users/Linda/CoolerInstrument/app/src/main/res/values/styles.xml -->
     <eat-comment />

@@ -22,6 +22,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListAdapter;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.widget.TextView;
@@ -114,34 +117,9 @@ public class Instrument extends Activity {
         recorder = new Recorder();
         replayer = new Replayer(new Song(), piano, noteToTextview);
 
-        for (int i = 0; i < 50; i++) {
-            // connect to meteor server
-            try {
-                Global.client = new DdpClient(Global.serverUrl, 8000);
-                Observer obs = new NoteObserver(piano);
-                Global.client.addObserver(obs);
-                Global.client.connect();
-
-                try {
-                    Thread.sleep(5000);
-
-                    Global.client.subscribe("datas", new Object[]{});
-
-                    System.out.println("calling remote method...");
-
-                    // TODO: pick and join a game
-                    Object[] methodArgs = new Object[1];
-                    methodArgs[0] = new Date().toString();
-                    Global.client.call("update_time", methodArgs);
-
-                } catch (InterruptedException e) {
-
-                    e.printStackTrace();
-                }
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            }
-        }
+        Observer obs = new NoteObserver(piano);
+        Global.client.addObserver(obs);
+        Global.client.subscribe("datas", new Object[]{});
     }
 
     public void onPlaybackToggled(final View view){
@@ -197,6 +175,15 @@ public class Instrument extends Activity {
                 new GetSong().execute(data.getStringExtra("songUrl"));
             }
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Object[] methodArgs = new Object[2];
+        methodArgs[0] = Global.gameID;
+        methodArgs[1] = Global.pID;
+        Global.client.call("removePlayer", methodArgs);
     }
 
     /**
@@ -476,4 +463,77 @@ public class Instrument extends Activity {
 		}
 		return true;
 	}
+
+    private class GetPort extends AsyncTask<String, Void, Void> {
+        Song song;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
+            pDialog = new ProgressDialog(Instrument.this);
+            pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected Void doInBackground(String... songUrl) {
+            ServiceHandler sh = new ServiceHandler();
+            String url = "http://10.33.47.29:8000";
+
+            // Making a request to url and getting response
+            String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET);
+
+            if (jsonStr != null) {
+                try {
+                    JSONObject info = new JSONObject(jsonStr);
+                    String host = info.getString("host");
+                    Global.port = info.getInt("port");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Log.e("ServiceHandler", "Couldn't get any data from the url");
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+
+            // Dismiss the progress dialog
+            if (pDialog.isShowing()) pDialog.dismiss();
+
+
+            try {
+
+                Global.client = new DdpClient(Global.serverUrl, Global.port);
+                Observer gobs = new GameObserver();
+                Observer obs = new NoteObserver(piano);
+                Global.client.addObserver(obs);
+                Global.client.addObserver(gobs);
+                Global.client.connect();
+
+                Thread.sleep(500);
+
+                Global.client.subscribe("datas", new Object[]{});
+                Global.client.subscribe("games", new Object[]{});
+
+                System.out.println("calling remote method...");
+
+                // TODO: pick and join a game
+                Object[] methodArgs = new Object[1];
+                methodArgs[0] = new Date().toString();
+                Global.client.call("update_time", methodArgs);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
