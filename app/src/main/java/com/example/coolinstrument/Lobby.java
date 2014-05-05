@@ -31,6 +31,8 @@ public class Lobby extends Activity {
     private static Activity act = new Activity();
     private static View.OnClickListener listener;
 
+    public static Object obj = new Object();
+
     private static Intent goToInstrument;
 
     private ProgressDialog pDialog;
@@ -52,14 +54,10 @@ public class Lobby extends Activity {
         create.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Global.client.call("createGame", new Object[]{});
-                while (Global.gameID == null) {
-                    try { Thread.sleep(200); }
+                synchronized (obj) {
+                    try { obj.wait(); }
                     catch (Exception e) { e.printStackTrace(); }
                 }
-                Object[] methodArgs = new Object[2];
-                methodArgs[0] = Global.gameID;
-                methodArgs[1] = Global.pID;
-                Global.client.call("addPlayer", methodArgs);
                 startActivity(goToInstrument);
             }
 
@@ -93,6 +91,10 @@ public class Lobby extends Activity {
         } */
 
         setContentView(scroll);
+    }
+
+    public static void startGame() {
+
     }
 
     @Override
@@ -145,6 +147,7 @@ public class Lobby extends Activity {
                 Button b = Global.games.get(gameID);
                 inner.removeView(b);
                 Global.games.remove(gameID);
+                Global.IDs.remove(b);
             }
         });
     }

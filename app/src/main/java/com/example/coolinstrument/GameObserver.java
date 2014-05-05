@@ -18,6 +18,13 @@ public class GameObserver implements Observer {
 
             if (info.has("result")) {
                 Global.gameID = info.getString("result");
+                Object[] methodArgs = new Object[2];
+                methodArgs[0] = Global.gameID;
+                methodArgs[1] = Global.pID;
+                Global.client.call("addPlayer", methodArgs);
+                synchronized(Lobby.obj) {
+                    Lobby.obj.notify();
+                }
             }
 
             if (((String) msg).contains("connected")) {
@@ -41,7 +48,7 @@ public class GameObserver implements Observer {
                     } else {
                         Lobby.addGame(gameID, users);
                     }
-                } else {
+                } else if (type.equals("removed")) {
                     String gameID = info.getString("id");
                     if (Global.games.containsKey(gameID)) {
                         Lobby.removeGame(gameID);

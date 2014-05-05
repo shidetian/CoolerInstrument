@@ -9,7 +9,7 @@ import java.util.HashMap;
  */
 public class Global {
     public static DdpClient client;
-    public static String serverUrl = "10.32.5.69";
+    public static String serverUrl = "10.33.94.139";
     public static int port = 3000;
     public static String gameID;
     public static String pID;
