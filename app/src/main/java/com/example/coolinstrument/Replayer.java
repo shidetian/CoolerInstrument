@@ -124,6 +124,7 @@ public class Replayer {
 
     public void pause() {
         playbackTimer.cancel();
+        playbackTimer = new Timer();
         if (noteToTextview.containsKey(notePausedAt))
             UINotes.push(new NoteColor(notePausedAt, Color.BLACK));
         dumpNotes(false);
@@ -171,6 +172,7 @@ public class Replayer {
                 for (NoteColor n : UINotes){
                     noteToTextview.get(n.note).setBackgroundColor(n.color);
                 }
+                UINotes.clear();
             }
         });
     }

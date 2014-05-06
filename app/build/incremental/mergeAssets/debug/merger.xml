@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merger>
 
-    <dataSet config="19.0.1" >
-        <source path="/Users/Linda/CoolerInstrument/app/build/exploded-aar/com.android.support/appcompat-v7/19.0.1/assets" />
+    <dataSet config="19.1.0" >
+        <source path="/Users/Linda/CoolerInstrument/app/build/exploded-aar/com.android.support/appcompat-v7/19.1.0/assets" />
     </dataSet>
     <dataSet config="main" >
         <source path="/Users/Linda/CoolerInstrument/app/src/main/assets" />
