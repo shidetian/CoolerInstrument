@@ -304,4 +304,4 @@
         android:layout_alignTop="@+id/playButton"
         android:layout_toRightOf="@+id/playButton" />
 
-</RelativeLayout><!-- From: file:/Users/Linda/CoolerInstrument/app/src/main/res/layout/instrument.xml -->
+</RelativeLayout><!-- From: file:/home/lam/AndroidStudioProjects/Coo/app/src/main/res/layout/instrument.xml -->
