@@ -2,6 +2,7 @@ package com.example.coolinstrument;
 
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -22,6 +23,7 @@ public class GameObserver implements Observer {
                 methodArgs[0] = Global.gameID;
                 methodArgs[1] = Global.pID;
                 Global.client.call("addPlayer", methodArgs);
+                Global.client.call("removeDatas", new Object[]{});
                 synchronized(Lobby.obj) {
                     Lobby.obj.notify();
                 }
@@ -35,24 +37,24 @@ public class GameObserver implements Observer {
                 String type = info.getString("msg");
                 if (type.equals("added")) {
                     String gameID = info.getString("id");
-                    int users = info.has("fields") ?
-                            info.getJSONObject("fields").getJSONArray("playerIds").length() : 0;
+                    int users = 0;
+                    if (info.has("fields")) {
+                        JSONObject fields = info.getJSONObject("fields");
+                        String title = fields.getString("title");
+                        String artist = fields.getString("artist");
+                        Global.songs.put(gameID, title + " - " + artist);
+                        users = fields.getJSONArray("playerIds").length();
+                    }
                     System.out.println("Game " + gameID + " has " + users + " users");
                     Lobby.addGame(gameID, users);
                 } else if (type.equals("changed")) {
                     String gameID = info.getString("id");
                     int users = info.getJSONObject("fields").getJSONArray("playerIds").length();
                     System.out.println("Game " + gameID + " has " + users + " users");
-                    if (Global.games.containsKey(gameID)) {
-                        Lobby.changeGame(gameID, users);
-                    } else {
-                        Lobby.addGame(gameID, users);
-                    }
+                    Lobby.changeGame(gameID, users);
                 } else if (type.equals("removed")) {
                     String gameID = info.getString("id");
-                    if (Global.games.containsKey(gameID)) {
-                        Lobby.removeGame(gameID);
-                    }
+                    Lobby.removeGame(gameID);
                 }
             }
         } catch (Exception e) {

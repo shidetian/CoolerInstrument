@@ -25,7 +25,6 @@ public class SongsActivity extends ListActivity {
     private ProgressDialog pDialog;
     ListView lv;
 
-
     // URL to get contacts JSON
     private static String url = "http://amusing2.meteor.com/songsApi";
 
@@ -81,6 +80,7 @@ public class SongsActivity extends ListActivity {
 
             if (jsonStr != null) {
                 try {
+                    System.out.println(jsonStr);
                     // Getting JSON Array node
                     songs = new JSONArray(jsonStr);
 

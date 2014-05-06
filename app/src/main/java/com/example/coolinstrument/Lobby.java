@@ -6,12 +6,14 @@ import android.os.AsyncTask;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ScrollView;
 import android.widget.LinearLayout;
 import android.widget.Button;
 import android.view.View;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,12 +60,18 @@ public class Lobby extends Activity {
                     try { obj.wait(); }
                     catch (Exception e) { e.printStackTrace(); }
                 }
+                Global.client.call("removeDatas", new Object[]{});
                 startActivity(goToInstrument);
             }
 
         });
 
+        TextView text = new TextView(this);
+        text.setGravity(Gravity.CENTER_HORIZONTAL);
+        text.setText("Or select a game from below:");
+
         inner.addView(create);
+        inner.addView(text);
 
         listener = new View.OnClickListener() {
             public void onClick(View v) {
@@ -121,7 +129,7 @@ public class Lobby extends Activity {
             @Override
             public void run(){
                 Button b = new Button(inner.getContext());
-                b.setText("Song:\n# Players: " + n);
+                b.setText(Global.songs.get(gameID) + "\n# Players: " + n);
                 b.setOnClickListener(listener);
                 inner.addView(b);
                 Global.games.put(gameID, b);
@@ -135,7 +143,7 @@ public class Lobby extends Activity {
             @Override
             public void run(){
                 Button b = Global.games.get(gameID);
-                b.setText("Song:\n# Players " + n);
+                b.setText(Global.songs.get(gameID) + "\n# Players " + n);
             }
         });
     }
@@ -148,6 +156,7 @@ public class Lobby extends Activity {
                 inner.removeView(b);
                 Global.games.remove(gameID);
                 Global.IDs.remove(b);
+                Global.songs.remove(gameID);
             }
         });
     }
@@ -209,7 +218,6 @@ public class Lobby extends Activity {
 
                 System.out.println("calling remote method...");
 
-                // TODO: pick and join a game
                 Object[] methodArgs = new Object[1];
                 methodArgs[0] = new Date().toString();
                 Global.client.call("update_time", methodArgs);

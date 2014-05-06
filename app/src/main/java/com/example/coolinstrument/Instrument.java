@@ -184,6 +184,7 @@ public class Instrument extends Activity {
         methodArgs[0] = Global.gameID;
         methodArgs[1] = Global.pID;
         Global.client.call("removePlayer", methodArgs);
+        Global.gameID = null;
     }
 
     /**
